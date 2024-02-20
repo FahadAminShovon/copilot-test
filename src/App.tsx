@@ -1,15 +1,15 @@
-import { Button } from '@components';
-import { Typography } from '@mui/material';
+import { Button } from '@components'
+import { Typography } from '@mui/material'
 
 function App() {
   return (
     <>
-      <Button variant='contained'>Test button</Button>
+      <Button variant="contained">Test button</Button>
       <Typography>hello</Typography>
-			<Typography>test</Typography>
-			<Typography>test 1</Typography>
+      <Typography>test</Typography>
+      <Typography>test 2</Typography>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
