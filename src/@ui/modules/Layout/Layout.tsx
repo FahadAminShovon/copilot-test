@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import { Box, Container } from '@mui/material'
 import React from 'react'
+import Footer from '../../components/Footer/Footer'
 
 type PropType = {
   children: React.ReactNode
@@ -28,8 +30,11 @@ const Layout = ({ children }: PropType) => {
           },
         }}
       />
-      <Container maxWidth="xl" sx={{ py: 2 }}>
+      <Container maxWidth="xl" sx={{ py: 2, minHeight: `calc(100% - 2.5rem)` }}>
         {children}
+      </Container>
+      <Container maxWidth="xl">
+        <Footer />
       </Container>
     </Box>
   )

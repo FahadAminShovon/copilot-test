@@ -1,10 +1,10 @@
-import { Button } from '@components'
 import Layout from './@ui/modules/Layout/Layout'
+import Home from './pages/Home'
 
 function App() {
   return (
     <Layout>
-      <Button variant="contained">Test button</Button>
+      <Home />
     </Layout>
   )
 }
