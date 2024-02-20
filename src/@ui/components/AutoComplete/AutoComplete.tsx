@@ -10,13 +10,14 @@ type OptionsType = Record<string, any>
 
 type PropType<T extends OptionsType, TMultiple extends boolean = false> = {
   options: T[]
-  labelKey: keyof T
-  valueKey: keyof T
+  labelKey?: keyof T
   label?: string
   multiple?: TMultiple
+  placeholder?: string
+  variant?: 'outlined' | 'ghost'
 } & Pick<
   AutocompleteProps<T, TMultiple, false, false, 'div'>,
-  'renderOption' | 'sx'
+  'renderOption' | 'sx' | 'groupBy'
 >
 
 const AutoComplete = <T extends OptionsType>({
@@ -25,6 +26,9 @@ const AutoComplete = <T extends OptionsType>({
   label,
   renderOption,
   sx,
+  groupBy,
+  placeholder,
+  variant = 'outlined',
 }: PropType<T>) => {
   const id = useId()
   return (
@@ -35,6 +39,7 @@ const AutoComplete = <T extends OptionsType>({
         size="small"
         id={id}
         options={options}
+        groupBy={groupBy}
         css={css`
           > div > div {
             div {
@@ -43,22 +48,27 @@ const AutoComplete = <T extends OptionsType>({
             input {
               z-index: ${theme.zIndex.appBar};
             }
+            input::placeholder {
+              opacity: 1;
+            }
           }
         `}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            css={css`
-              color: red;
-              fieldset {
-                border-radius: 9999px;
-                background-color: ${theme.palette.common.white};
-              }
-            `}
-            placeholder="asdfasf"
-          />
-        )}
-        getOptionLabel={(option) => option[labelKey]}
+        renderInput={(params) => {
+          return (
+            <TextField
+              {...params}
+              css={css`
+                fieldset {
+                  border-radius: 9999px;
+                  background-color: ${theme.palette.common.white};
+                  border: ${variant === 'ghost' ? 'none' : 1};
+                }
+              `}
+              placeholder={placeholder}
+            />
+          )
+        }}
+        getOptionLabel={labelKey ? (option) => option[labelKey] : undefined}
         renderOption={renderOption}
       />
     </>
