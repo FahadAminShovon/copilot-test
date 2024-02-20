@@ -49,6 +49,6 @@
     "vite": "^5.1.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "pretty-quick --staged"
+    "pre-commit": "npx pretty-quick --staged"
   }
 }
