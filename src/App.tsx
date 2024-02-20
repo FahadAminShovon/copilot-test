@@ -6,6 +6,7 @@ function App() {
     <>
       <Button variant='contained'>Test button</Button>
       <Typography>hello</Typography>
+			<Typography>test</Typography>
     </>
   );
 }
