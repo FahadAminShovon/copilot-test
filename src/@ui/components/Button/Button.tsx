@@ -1,10 +1,13 @@
 import {
   Button as MuiButton,
   ButtonProps as MuiButtonProps,
-} from '@mui/material';
+} from '@mui/material'
 
 // Only include variant, size, and color
-type ButtonBaseProps = Pick<MuiButtonProps, 'variant' | 'size' | 'children'>;
+type ButtonBaseProps = Pick<
+  MuiButtonProps,
+  'variant' | 'size' | 'color' | 'children'
+>
 
 // Use all except disableRipple
 // type ButtonBaseProps = Omit<MuiButtonProps, "disableRipple">;
@@ -12,5 +15,7 @@ type ButtonBaseProps = Pick<MuiButtonProps, 'variant' | 'size' | 'children'>;
 export interface ButtonProps extends ButtonBaseProps {}
 
 export const Button = ({ children, ...rest }: ButtonProps) => (
-  <MuiButton {...rest}>{children}</MuiButton>
-);
+  <MuiButton {...rest} sx={{ borderRadius: 9999 }}>
+    {children}
+  </MuiButton>
+)

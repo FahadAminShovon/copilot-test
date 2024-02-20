@@ -1,14 +1,11 @@
 import { Button } from '@components'
-import { Typography } from '@mui/material'
+import Layout from './@ui/modules/Layout/Layout'
 
 function App() {
   return (
-    <>
+    <Layout>
       <Button variant="contained">Test button</Button>
-      <Typography>hello</Typography>
-      <Typography>test</Typography>
-      <Typography>test 2</Typography>
-    </>
+    </Layout>
   )
 }
 
