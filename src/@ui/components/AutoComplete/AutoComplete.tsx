@@ -36,7 +36,11 @@ const AutoComplete = <T extends OptionsType>({
 }: PropType<T>) => {
   const id = useId()
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        width: '100%',
+      }}
+    >
       {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
       <MuiAutocomplete
         sx={sx}
@@ -48,13 +52,11 @@ const AutoComplete = <T extends OptionsType>({
           > div {
             div {
               div {
-                z-index: ${theme.zIndex.appBar};
                 button {
                   display: ${hideCursor ? 'none' : 'block'};
                 }
               }
               input {
-                z-index: ${theme.zIndex.appBar};
                 margin-left: ${variant === 'ghost' ? -12 : 0}px;
                 text-align: ${alignment};
                 margin-right: ${alignment === 'left' ? 0 : -40}px;
@@ -72,7 +74,6 @@ const AutoComplete = <T extends OptionsType>({
               css={css`
                 fieldset {
                   border-radius: 9999px;
-                  background-color: ${theme.palette.common.white};
                   border: ${variant === 'ghost' ? 'none' : 1};
                 }
               `}

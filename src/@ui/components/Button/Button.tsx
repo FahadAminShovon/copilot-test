@@ -6,7 +6,7 @@ import {
 // Only include variant, size, and color
 type ButtonBaseProps = Pick<
   MuiButtonProps,
-  'variant' | 'size' | 'color' | 'children'
+  'variant' | 'size' | 'color' | 'children' | 'fullWidth' | 'onClick'
 >
 
 // Use all except disableRipple

@@ -17,6 +17,8 @@
     "@fontsource/material-icons": "^5.0.13",
     "@fontsource/roboto": "^5.0.8",
     "@mui/material": "^5.15.10",
+    "@mui/x-date-pickers": "^6.19.4",
+    "dayjs": "^1.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "vite-tsconfig-paths": "^4.3.1"

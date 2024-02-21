@@ -10,6 +10,7 @@ import {
 import SvgCopilotTravel from '../../../assets/icons/SvgCopilotTravel'
 import { countries } from '../../../data/countries'
 import { Autocomplete } from '@components'
+import { theme } from '../../../theme'
 
 const Header = () => {
   return (
@@ -29,31 +30,38 @@ const Header = () => {
           </ListItem>
         </List>
       </nav>
-      <Autocomplete
-        options={countries}
-        labelKey="name"
-        sx={{ width: 300, marginLeft: 'auto' }}
-        renderOption={(props, data) => (
-          <Box
-            sx={{
-              borderRadius: '8px',
-              margin: '5px',
-              [`&.${autocompleteClasses.option}`]: {
-                padding: '8px',
-              },
-              display: 'flex',
-            }}
-            component="li"
-            color={'grey'}
-            {...props}
-          >
-            <Typography>{data.name}</Typography>
-            <Typography sx={{ marginLeft: 'auto', fontWeight: 'bold' }}>
-              {data.code}
-            </Typography>
-          </Box>
-        )}
-      />
+      <Box
+        sx={{
+          background: theme.palette.common.white,
+          borderRadius: 9999,
+        }}
+      >
+        <Autocomplete
+          options={countries}
+          labelKey="name"
+          sx={{ width: 300, marginLeft: 'auto' }}
+          renderOption={(props, data) => (
+            <Box
+              sx={{
+                borderRadius: '8px',
+                margin: '5px',
+                [`&.${autocompleteClasses.option}`]: {
+                  padding: '8px',
+                },
+                display: 'flex',
+              }}
+              component="li"
+              color={'grey'}
+              {...props}
+            >
+              <Typography>{data.name}</Typography>
+              <Typography sx={{ marginLeft: 'auto', fontWeight: 'bold' }}>
+                {data.code}
+              </Typography>
+            </Box>
+          )}
+        />
+      </Box>
     </header>
   )
 }
