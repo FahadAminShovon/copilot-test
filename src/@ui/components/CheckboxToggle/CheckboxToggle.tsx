@@ -10,7 +10,7 @@ export type CheckboxOptionType<T extends string = string> = {
   label: string
   value: T
 }
-type PropType<T extends string = string> = {
+export type CheckboxToggleProps<T extends string = string> = {
   label?: string
   selectedValue: string
   options: CheckboxOptionType<T>[]
@@ -24,7 +24,7 @@ export default function CheckboxToggle<T extends string = string>({
   setSelectedValue,
   row,
   labelPlacement = 'end',
-}: PropType<T>) {
+}: CheckboxToggleProps<T>) {
   return (
     <FormControl component="fieldset">
       {label && <FormLabel component="legend">{label}</FormLabel>}

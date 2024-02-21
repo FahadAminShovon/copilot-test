@@ -1,19 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import Counter, { CounterProps } from './Counter'
 
-// Define the meta information for the stories
 const meta: Meta<CounterProps> = {
   title: 'Counter',
   component: Counter,
 }
 
-// Export the meta information
 export default meta
 
-// Define the Story type
 type Story = StoryObj<typeof meta>
 
-// Define individual stories using the Story type
 export const WithLabelAndCaption: Story = {
   args: {
     label: 'Counter Label',
