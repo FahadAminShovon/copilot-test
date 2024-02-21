@@ -10,16 +10,21 @@ export const AISearchBtn = ({
   isAiSearchEnabled,
   setIsAiSearchEnabled,
 }: Proptype) => (
-  <Stack direction="row" gap={1} alignItems="center">
+  <Stack
+    direction={{ xs: 'row-reverse', sm: 'row' }}
+    gap={{ xs: 1, sm: 2 }}
+    alignItems="center"
+  >
     <Chip
       label="New"
       variant="filled"
       color="success"
       sx={{ borderRadius: 1, opacity: 0.6, px: 1.5, py: 0.5 }}
+      size={'small'}
     />
     <FormControlLabel
       label="AI Search"
-      control={<Switch />}
+      control={<Switch size="small" />}
       css={css`
         .MuiFormControlLabel-label {
           color: ${colors.grey[600]};

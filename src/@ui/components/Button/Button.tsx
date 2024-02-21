@@ -21,8 +21,8 @@ type ButtonBaseProps = Pick<
 
 export interface ButtonProps extends ButtonBaseProps {}
 
-export const Button = ({ children, ...rest }: ButtonProps) => (
-  <MuiButton {...rest} sx={{ borderRadius: 9999 }}>
+export const Button = ({ children, sx, ...rest }: ButtonProps) => (
+  <MuiButton {...rest} sx={{ borderRadius: 9999, ...sx }}>
     {children}
   </MuiButton>
 )

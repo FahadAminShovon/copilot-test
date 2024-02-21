@@ -19,24 +19,33 @@ const Layout = ({ children }: PropType) => {
           display: {
             xs: 'none',
             md: 'block',
-            position: 'absolute',
-            backgroundImage: "url('src/assets/copilotBackground.png')",
-            inset: 0,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100%',
-            pointerEvents: 'none',
-            height: 400,
-            zIndex: -1,
-            objectFit: 'cover',
           },
+          position: 'absolute',
+          backgroundImage: "url('src/assets/copilotBackground.png')",
+          inset: 0,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '100%',
+          pointerEvents: 'none',
+          height: 400,
+          zIndex: -1,
+          objectFit: 'cover',
         }}
       />
-      <Container maxWidth="xl" sx={{ pt: 2, pb: 0, height: '100%' }}>
-        <Header />
+      <Container
+        maxWidth="xl"
+        sx={{
+          pt: { xs: 0, md: 2 },
+          pb: 0,
+          height: '100%',
+          px: { xs: 0, md: 3 },
+        }}
+      >
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          <Header />
+        </Box>
         <main
           css={css`
             width: 100%;
-            /* min-height: calc(100% - 8rem); */
             padding-block: 1rem;
           `}
         >

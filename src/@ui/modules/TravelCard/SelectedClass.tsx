@@ -20,7 +20,6 @@ const SelectedClass = () => {
 
   return (
     <>
-      {' '}
       <MuiButton
         endIcon={<ExpandMoreOutlinedIcon color="primary" />}
         startIcon={<ChairAltOutlinedIcon />}

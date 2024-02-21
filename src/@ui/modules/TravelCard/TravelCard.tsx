@@ -12,6 +12,7 @@ import {
   FormControlLabel,
   colors,
   TextField,
+  Divider,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { theme } from '../../../theme'
@@ -32,6 +33,12 @@ import PassangerSelect from './PassangerSelect'
 import TravelDatePicker from './TravelDatePicker'
 
 type ToggleType = 'round-trip' | 'one-way'
+
+const CustomDivider = () => (
+  <Grid xs={12} sx={{ display: { md: 'none' } }}>
+    <Divider />
+  </Grid>
+)
 
 const TravelCard = () => {
   const [selectedValue, setSelectedValue] = useState<ToggleType>('one-way')
@@ -55,7 +62,7 @@ const TravelCard = () => {
   return (
     <>
       {!isAiSearchEnabled && (
-        <Stack gap={5}>
+        <Stack gap={{ xs: 7, md: 5 }}>
           <Stack alignItems={'center'} direction={'row'} gap={2}>
             <ToggleButtonGroup
               selectedValue={selectedValue}
@@ -65,19 +72,24 @@ const TravelCard = () => {
                 { label: 'One Way', value: 'one-way' },
               ]}
             />
-            <Box sx={{ ml: 'auto' }}>
+            <Box sx={{ ml: 'auto', display: { xs: 'none', md: 'block' } }}>
               <PassangerSelect />
             </Box>
-            <SelectedClass />
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <SelectedClass />
+            </Box>
           </Stack>
           <Grid container spacing={2}>
-            <Grid xs={6}>
+            <Grid xs={12} md={6}>
               <Stack
                 direction={'row'}
                 justifyContent={'space-between'}
                 sx={{
                   flexGrow: 1,
-                  borderRight: `1px solid ${theme.palette.divider}`,
+                  borderRight: {
+                    xs: 'none',
+                    md: `1px solid ${theme.palette.divider}`,
+                  },
                   paddingRight: 2.5,
                 }}
                 alignItems="center"
@@ -96,11 +108,12 @@ const TravelCard = () => {
                 />
               </Stack>
             </Grid>
-            <Grid xs={6}>
+            <CustomDivider />
+            <Grid xs={12} md={6}>
               <Stack
                 direction={'row'}
                 justifyContent={'space-between'}
-                sx={{ flexGrow: 1, paddingLeft: 2.5 }}
+                sx={{ flexGrow: 1, paddingLeft: { xs: 0, md: 2.5 } }}
               >
                 <TravelDatePicker value={value} setValue={setValue}>
                   Depart
@@ -123,29 +136,56 @@ const TravelCard = () => {
                 {selectedValue !== 'round-trip' && <Box />}
               </Stack>
             </Grid>
+            <CustomDivider />
+            <Grid sx={{ display: { md: 'none' } }} xs={12}>
+              <PassangerSelect />
+            </Grid>
+            <CustomDivider />
+            <Grid sx={{ display: { md: 'none' } }} xs={12}>
+              <SelectedClass />
+            </Grid>
+            <CustomDivider />
           </Grid>
-          <Stack direction={'row'} gap={1} alignItems="center">
-            <FormControlLabel
-              label="Nonstop"
-              control={<Switch />}
-              css={css`
-                .MuiFormControlLabel-label {
-                  color: ${colors.grey[600]};
-                }
-              `}
-            />
-            <AISearchBtn
-              isAiSearchEnabled={isAiSearchEnabled}
-              setIsAiSearchEnabled={setIsAiSearchEnabled}
-            />
-            <Box sx={{ ml: 'auto' }}>
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            gap={5}
+            alignItems="center"
+          >
+            <Stack
+              flexWrap="wrap"
+              direction="row"
+              justifyContent={{ xs: 'space-between', md: 'flex-start' }}
+              sx={{ width: { xs: '100%', md: 'auto' } }}
+              gap={2}
+            >
+              <FormControlLabel
+                label="Nonstop"
+                control={<Switch size="small" />}
+                css={css`
+                  .MuiFormControlLabel-label {
+                    color: ${colors.grey[600]};
+                  }
+                `}
+              />
+              <AISearchBtn
+                isAiSearchEnabled={isAiSearchEnabled}
+                setIsAiSearchEnabled={setIsAiSearchEnabled}
+              />
+            </Stack>
+            <Box
+              sx={{
+                ml: 'auto',
+                flexGrow: { xs: 1, md: 0 },
+                width: { xs: '100%', md: 'auto' },
+              }}
+            >
               <Button
                 variant="contained"
                 size="large"
-                sx={{ ml: 'auto', px: 2 }}
+                sx={{ ml: { md: 'auto' }, px: 2, width: '100%' }}
                 disabled={selectedValue === 'one-way'}
               >
-                Search&nbsp;Flights
+                Search Flights
               </Button>
             </Box>
           </Stack>
