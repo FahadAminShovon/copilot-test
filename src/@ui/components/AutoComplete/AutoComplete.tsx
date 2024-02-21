@@ -5,9 +5,12 @@ import MuiAutocomplete, { AutocompleteProps } from '@mui/material/Autocomplete'
 import { Box, TextField } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 
-type OptionsType = Record<string, any>
+export type OptionsType = Record<string, any>
 
-type PropType<T extends OptionsType, TMultiple extends boolean = false> = {
+export type AutoCompletePropType<
+  T extends OptionsType,
+  TMultiple extends boolean = false,
+> = {
   options: T[]
   labelKey?: keyof T
   label?: string
@@ -33,7 +36,7 @@ const AutoComplete = <T extends OptionsType>({
   alignment = 'left',
   hideCursor,
   defaultValue,
-}: PropType<T>) => {
+}: AutoCompletePropType<T>) => {
   const id = useId()
   return (
     <Box
