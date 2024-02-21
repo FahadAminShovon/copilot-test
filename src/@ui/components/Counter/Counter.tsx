@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined'
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined'
-import { Box, IconButton, InputLabel, Stack, Typography } from '@mui/material'
-type PropType = {
+import { Box, IconButton, Stack, Typography } from '@mui/material'
+export type CounterProps = {
   onIncrement: () => void
   onDecrement: () => void
   value: number
@@ -16,7 +16,7 @@ const Counter = ({
   onDecrement,
   onIncrement,
   value,
-}: PropType) => {
+}: CounterProps) => {
   return (
     <Stack
       direction={'row'}
