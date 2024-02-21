@@ -40,7 +40,11 @@ const AutoComplete = <T extends OptionsType>({
         width: '100%',
       }}
     >
-      {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
+      {label && (
+        <InputLabel htmlFor={id} sx={{ textAlign: alignment }}>
+          {label}
+        </InputLabel>
+      )}
       <MuiAutocomplete
         sx={sx}
         size="small"

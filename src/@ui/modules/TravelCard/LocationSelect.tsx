@@ -1,7 +1,17 @@
 import { Autocomplete } from '@components'
-import { Box, Typography, autocompleteClasses } from '@mui/material'
+import { Box, Stack, Typography, autocompleteClasses } from '@mui/material'
 import { AirportTypes } from '../../../data/airports'
+import AirplaneTicketOutlinedIcon from '@mui/icons-material/AirplaneTicketOutlined'
+import FlightTakeoffOutlinedIcon from '@mui/icons-material/FlightTakeoffOutlined'
 
+const Location = ({ name, code }: { name: string; code: string }) => (
+  <Stack direction={'row'} gap={1}>
+    <AirplaneTicketOutlinedIcon fontSize="small" />
+    <Typography>
+      {name} {`(${code})`}
+    </Typography>
+  </Stack>
+)
 const LocationSelect = ({
   airports,
   placeholder,
@@ -48,20 +58,15 @@ const LocationSelect = ({
           >
             <Box>
               {idx !== -1 && idx < 10 ? (
-                <Box>
-                  <Typography>
-                    {data.city.name} {`(${data.city.code})`}
-                  </Typography>
-                  <Box sx={{ ml: 3 }}>
+                <>
+                  <Location name={data.city.name} code={data.city.code} />
+                  <Stack sx={{ ml: 3 }} direction={'row'}>
+                    <FlightTakeoffOutlinedIcon fontSize="small" />
                     <Typography>{data.name.short}</Typography>
-                  </Box>
-                </Box>
+                  </Stack>
+                </>
               ) : (
-                <Box>
-                  <Typography>
-                    {data.city.name} {`(${data.city.code})`}
-                  </Typography>
-                </Box>
+                <Location name={data.city.name} code={data.city.code} />
               )}
             </Box>
           </Box>

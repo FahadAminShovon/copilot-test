@@ -5,6 +5,7 @@ import {
   Paper,
   Popover,
   Button as MuiButton,
+  InputLabel,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { theme } from '../../../theme'
@@ -22,6 +23,8 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined'
 import { seatTypes } from '../../../data/seatType'
 import ChairAltOutlinedIcon from '@mui/icons-material/ChairAltOutlined'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+
+import RepeatOutlinedIcon from '@mui/icons-material/RepeatOutlined'
 
 type ToggleType = 'round-trip' | 'one-way'
 
@@ -128,7 +131,7 @@ const TravelCard = () => {
                 placeholder={'Select City'}
                 label="From"
               />
-              <Typography>Icon</Typography>
+              <RepeatOutlinedIcon />
               <LocationSelect
                 airports={airports}
                 placeholder={'Select City'}
@@ -144,7 +147,7 @@ const TravelCard = () => {
               sx={{ flexGrow: 1, paddingLeft: 2.5 }}
             >
               <Box>
-                <Typography>Depart</Typography>
+                <InputLabel>Depart</InputLabel>
                 <MuiButton
                   sx={{ padding: 0, color: 'black', mt: 1 }}
                   onClick={handleOpen}
