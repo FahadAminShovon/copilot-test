@@ -37,8 +37,9 @@ const Header = () => {
         }}
       >
         <Autocomplete
+          defaultValue={countries.find(({ code }) => code === 'USA')}
           options={countries}
-          labelKey="name"
+          labelKey="code"
           sx={{ width: 300, marginLeft: 'auto' }}
           renderOption={(props, data) => (
             <Box

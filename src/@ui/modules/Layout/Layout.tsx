@@ -36,7 +36,7 @@ const Layout = ({ children }: PropType) => {
         <main
           css={css`
             width: 100%;
-            min-height: calc(100% - 8rem);
+            /* min-height: calc(100% - 8rem); */
             padding-block: 1rem;
           `}
         >

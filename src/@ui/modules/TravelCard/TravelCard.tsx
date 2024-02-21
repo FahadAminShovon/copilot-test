@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
+
 import {
   Stack,
   Box,
@@ -6,6 +9,10 @@ import {
   Popover,
   Button as MuiButton,
   InputLabel,
+  Switch,
+  FormControlLabel,
+  colors,
+  Chip,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { theme } from '../../../theme'
@@ -83,7 +90,7 @@ const TravelCard = () => {
 
   return (
     <>
-      <Stack gap={3}>
+      <Stack gap={5}>
         <Stack alignItems={'center'} direction={'row'} gap={2}>
           <ToggleButtonGroup
             selectedValue={selectedValue}
@@ -175,6 +182,49 @@ const TravelCard = () => {
             </Stack>
           </Grid>
         </Grid>
+        <Stack direction={'row'} gap={1} alignItems="center">
+          <FormControlLabel
+            label="Nonstop"
+            control={<Switch />}
+            css={css`
+              .MuiFormControlLabel-label {
+                color: ${colors.grey[600]};
+              }
+            `}
+          />
+          <Stack
+            direction="row"
+            gap={1}
+            alignItems="center"
+            sx={{ width: '100%' }}
+          >
+            <Chip
+              label="New"
+              variant="filled"
+              color="success"
+              sx={{ borderRadius: 1, opacity: 0.6, px: 1.5, py: 0.5 }}
+            />
+            <FormControlLabel
+              label="AI Search"
+              control={<Switch />}
+              css={css`
+                .MuiFormControlLabel-label {
+                  color: ${colors.grey[600]};
+                }
+              `}
+            />
+          </Stack>
+          <Box>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ ml: 'auto', px: 2 }}
+              disabled={selectedValue === 'one-way'}
+            >
+              Search&nbsp;Flights
+            </Button>
+          </Box>
+        </Stack>
       </Stack>
 
       <Popover

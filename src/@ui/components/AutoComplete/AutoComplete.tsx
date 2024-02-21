@@ -18,7 +18,7 @@ type PropType<T extends OptionsType, TMultiple extends boolean = false> = {
   hideCursor?: boolean
 } & Pick<
   AutocompleteProps<T, TMultiple, false, false, 'div'>,
-  'renderOption' | 'sx' | 'groupBy'
+  'renderOption' | 'sx' | 'groupBy' | 'defaultValue'
 >
 
 const AutoComplete = <T extends OptionsType>({
@@ -32,6 +32,7 @@ const AutoComplete = <T extends OptionsType>({
   variant = 'outlined',
   alignment = 'left',
   hideCursor,
+  defaultValue,
 }: PropType<T>) => {
   const id = useId()
   return (
@@ -46,6 +47,7 @@ const AutoComplete = <T extends OptionsType>({
         </InputLabel>
       )}
       <MuiAutocomplete
+        defaultValue={defaultValue}
         sx={sx}
         size="small"
         id={id}
@@ -56,7 +58,7 @@ const AutoComplete = <T extends OptionsType>({
             div {
               div {
                 button {
-                  display: ${hideCursor ? 'none' : 'block'};
+                  display: ${hideCursor ? 'none' : 'inline-flex'};
                 }
               }
               input {
