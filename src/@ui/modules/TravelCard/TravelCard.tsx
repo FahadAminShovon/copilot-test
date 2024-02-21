@@ -13,6 +13,7 @@ import {
   colors,
   TextField,
   Divider,
+  InputLabel,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { theme } from '../../../theme'
@@ -20,7 +21,6 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { Button, ToggleButtonGroup } from '@components'
 import { airports } from '../../../data/airports'
 import LocationSelect from './LocationSelect'
-// import DatePicker from '../../components/DatePicker/DatePicker'
 import React from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { usePopover } from '../../../hooks/usePopover'
@@ -138,10 +138,12 @@ const TravelCard = () => {
             </Grid>
             <CustomDivider />
             <Grid sx={{ display: { md: 'none' } }} xs={12}>
+              <InputLabel>Passengers</InputLabel>
               <PassangerSelect />
             </Grid>
             <CustomDivider />
             <Grid sx={{ display: { md: 'none' } }} xs={12}>
+              <InputLabel>Cabin Class</InputLabel>
               <SelectedClass />
             </Grid>
             <CustomDivider />
