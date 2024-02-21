@@ -19,15 +19,17 @@ const Dot = ({ isActive }: { isActive: boolean }) => (
   />
 )
 
+export type CustomToggleButtonProp<T extends string> = {
+  toggleType: T
+  selectedValue: T
+  children: React.ReactNode
+}
+
 const CustomToggleButton = <T extends string>({
   toggleType,
   selectedValue,
   children,
-}: {
-  toggleType: T
-  selectedValue: T
-  children: React.ReactNode
-}) => (
+}: CustomToggleButtonProp<T>) => (
   <ToggleButton value={toggleType}>
     <Stack direction={'row'} gap={1} alignItems={'center'}>
       <Dot isActive={selectedValue === toggleType} />
