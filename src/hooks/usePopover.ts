@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { useOutsideDetector } from './useOutSideDetector'
 // import { useOutsideDetector } from './useOutSideDetector'
 
-export const usePopover = (prop?: { autoClose?: boolean }) => {
+export const usePopover = () => {
   const [isPopupOpen, setisPopupOpen] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -11,14 +10,9 @@ export const usePopover = (prop?: { autoClose?: boolean }) => {
     setisPopupOpen(false)
   }
   const handleOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setAnchorEl(e.currentTarget.parentElement)
+    setAnchorEl(e.currentTarget)
     setisPopupOpen(true)
   }
-
-  useOutsideDetector({
-    anchorEl: prop?.autoClose ? anchorEl : null,
-    callback: handleClose,
-  })
 
   return { anchorEl, isPopupOpen, handleClose, handleOpen }
 }

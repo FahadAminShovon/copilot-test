@@ -4,7 +4,6 @@ import { useId } from 'react'
 import MuiAutocomplete, { AutocompleteProps } from '@mui/material/Autocomplete'
 import { Box, TextField } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
-import { theme } from '../../../theme'
 
 type OptionsType = Record<string, any>
 
