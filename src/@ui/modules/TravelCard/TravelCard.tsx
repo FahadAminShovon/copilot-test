@@ -8,7 +8,6 @@ import {
   Paper,
   Popover,
   Button as MuiButton,
-  InputLabel,
   Switch,
   FormControlLabel,
   colors,
@@ -20,7 +19,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 import { Button, ToggleButtonGroup } from '@components'
 import { airports } from '../../../data/airports'
 import LocationSelect from './LocationSelect'
-import DatePicker from '../../components/DatePicker/DatePicker'
+// import DatePicker from '../../components/DatePicker/DatePicker'
 import React from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { usePopover } from '../../../hooks/usePopover'
@@ -30,6 +29,7 @@ import RepeatOutlinedIcon from '@mui/icons-material/RepeatOutlined'
 import { AISearchBtn } from './AISearchBtn'
 import SelectedClass from './SelectedClass'
 import PassangerSelect from './PassangerSelect'
+import TravelDatePicker from './TravelDatePicker'
 
 type ToggleType = 'round-trip' | 'one-way'
 
@@ -38,29 +38,13 @@ const TravelCard = () => {
   const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'))
   const [isAiSearchEnabled, setIsAiSearchEnabled] = useState(false)
   const {
-    anchorEl: anchorElOneTrip,
-    isPopupOpen: isDatePickerOneTripOpen,
-    handleOpen: handleDatePickerOneTripOpen,
-    handleClose: handleDatePickerOneTripClose,
-  } = usePopover()
-
-  const {
     anchorEl: anchorElRoundTrip,
     isPopupOpen: isDatePickerRoundTripOpen,
-    handleOpen: handleDatePickerRoundTripOpen,
+    handleOpen,
     handleClose: handleDatePickerRoundTripClose,
   } = usePopover()
 
-  const handleOpen: typeof handleDatePickerOneTripOpen = (e) => {
-    if (selectedValue === 'one-way') {
-      handleDatePickerOneTripOpen(e)
-    } else if (selectedValue === 'round-trip') {
-      handleDatePickerRoundTripOpen(e)
-    }
-  }
-
   const handleClose = () => {
-    handleDatePickerOneTripClose()
     handleDatePickerRoundTripClose()
   }
 
@@ -118,16 +102,9 @@ const TravelCard = () => {
                 justifyContent={'space-between'}
                 sx={{ flexGrow: 1, paddingLeft: 2.5 }}
               >
-                <Box>
-                  <InputLabel>Depart</InputLabel>
-                  <MuiButton
-                    sx={{ padding: 0, color: 'black', mt: 1 }}
-                    onClick={handleOpen}
-                    disableRipple
-                  >
-                    {value ? dayjs(value).format('ddd MMMM D YYYY') : ''}
-                  </MuiButton>
-                </Box>
+                <TravelDatePicker value={value} setValue={setValue}>
+                  Depart
+                </TravelDatePicker>
 
                 {selectedValue === 'round-trip' && (
                   <Box>
@@ -198,22 +175,6 @@ const TravelCard = () => {
           </Box>
         </Stack>
       )}
-
-      <Popover
-        open={isDatePickerOneTripOpen}
-        anchorEl={anchorElOneTrip}
-        onClose={handleDatePickerOneTripClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Paper>
-          <DatePicker
-            value={value}
-            setValue={setValue}
-            onCancel={handleClose}
-          />
-        </Paper>
-      </Popover>
-
       <Popover
         open={isDatePickerRoundTripOpen}
         anchorEl={anchorElRoundTrip}
