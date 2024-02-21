@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from './Button'
+import { Button, ButtonProps } from './Button'
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const meta: Meta<typeof Button> = {
+const meta: Meta<ButtonProps> = {
   title: 'Button',
   component: Button,
 }
@@ -10,31 +9,62 @@ const meta: Meta<typeof Button> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
   args: {
     variant: 'contained',
     children: 'Button',
+    color: 'primary',
   },
 }
 
-export const Secondary: Story = {
+export const Outlined: Story = {
   args: {
+    variant: 'outlined',
     children: 'Button',
-    color: 'secondary',
+    color: 'primary',
   },
 }
 
-export const Large: Story = {
+export const Text: Story = {
   args: {
-    size: 'large',
+    variant: 'text',
     children: 'Button',
+    color: 'primary',
   },
 }
 
 export const Small: Story = {
   args: {
-    size: 'small',
+    variant: 'contained',
     children: 'Button',
+    size: 'small',
+    color: 'primary',
+  },
+}
+
+export const Large: Story = {
+  args: {
+    variant: 'contained',
+    children: 'Button',
+    size: 'large',
+    color: 'primary',
+  },
+}
+
+export const FullWidth: Story = {
+  args: {
+    variant: 'contained',
+    children: 'Button',
+    fullWidth: true,
+    color: 'primary',
+  },
+}
+
+export const Disabled: Story = {
+  args: {
+    variant: 'contained',
+    children: 'Button',
+    disabled: true,
+    color: 'primary',
   },
 }
