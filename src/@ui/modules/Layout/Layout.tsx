@@ -21,7 +21,7 @@ const Layout = ({ children }: PropType) => {
             md: 'block',
           },
           position: 'absolute',
-          backgroundImage: "url('src/assets/copilotBackground.png')",
+          backgroundImage: "url('/copilotBackground.png')",
           inset: 0,
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100%',
