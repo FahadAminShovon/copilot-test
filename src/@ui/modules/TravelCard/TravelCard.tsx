@@ -1,9 +1,10 @@
-import { Stack, Box, Typography, autocompleteClasses } from '@mui/material'
+import { Stack, Box, Typography } from '@mui/material'
 import { useState } from 'react'
 import { theme } from '../../../theme'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Autocomplete, ToggleButtonGroup } from '@components'
+import { ToggleButtonGroup } from '@components'
 import { airports } from '../../../data/airports'
+import LocationSelect from './LocationSelect'
 
 type ToggleType = 'round-trip' | 'one-way'
 
@@ -37,62 +38,20 @@ const TravelCard = () => {
               borderRight: `1px solid ${theme.palette.divider}`,
               paddingRight: 2.5,
             }}
+            alignItems="center"
           >
-            <Box>
-              <Autocomplete
-                variant="ghost"
-                label="From"
-                options={airports}
-                sx={{ width: 300 }}
-                placeholder="Select City"
-                renderOption={(props, data) => {
-                  let idx = -1
-                  if (
-                    'data-option-index' in props &&
-                    typeof props['data-option-index'] === 'number'
-                  ) {
-                    idx = props['data-option-index']
-                  }
-                  return (
-                    <Box
-                      sx={{
-                        borderRadius: '8px',
-                        margin: '5px',
-                        [`&.${autocompleteClasses.option}`]: {
-                          padding: '8px',
-                        },
-                        display: 'flex',
-                      }}
-                      component="li"
-                      color={'grey'}
-                      {...props}
-                    >
-                      <Box>
-                        {idx !== -1 && idx < 10 ? (
-                          <Box>
-                            <Typography>
-                              {data.city.name} {`(${data.city.code})`}
-                            </Typography>
-                            <Box sx={{ ml: 3 }}>
-                              <Typography>{data.name.short}</Typography>
-                            </Box>
-                          </Box>
-                        ) : (
-                          <Box>
-                            <Typography>
-                              {data.city.name} {`(${data.city.code})`}
-                            </Typography>
-                          </Box>
-                        )}
-                      </Box>
-                    </Box>
-                  )
-                }}
-              />
-            </Box>
-            <Box>
-              <Typography>To</Typography>
-            </Box>
+            <LocationSelect
+              airports={airports}
+              placeholder={'Select City'}
+              label="From"
+            />
+            <Typography>Icon</Typography>
+            <LocationSelect
+              airports={airports}
+              placeholder={'Select City'}
+              label="To"
+              alignment="right"
+            />
           </Stack>
         </Grid>
         <Grid xs={6}>

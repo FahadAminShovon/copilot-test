@@ -2,7 +2,7 @@
 import { css } from '@emotion/react'
 import { useId } from 'react'
 import MuiAutocomplete, { AutocompleteProps } from '@mui/material/Autocomplete'
-import { TextField } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel'
 import { theme } from '../../../theme'
 
@@ -15,6 +15,8 @@ type PropType<T extends OptionsType, TMultiple extends boolean = false> = {
   multiple?: TMultiple
   placeholder?: string
   variant?: 'outlined' | 'ghost'
+  alignment?: 'left' | 'right'
+  hideCursor?: boolean
 } & Pick<
   AutocompleteProps<T, TMultiple, false, false, 'div'>,
   'renderOption' | 'sx' | 'groupBy'
@@ -29,10 +31,12 @@ const AutoComplete = <T extends OptionsType>({
   groupBy,
   placeholder,
   variant = 'outlined',
+  alignment = 'left',
+  hideCursor,
 }: PropType<T>) => {
   const id = useId()
   return (
-    <>
+    <Box sx={{ width: '100%' }}>
       {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
       <MuiAutocomplete
         sx={sx}
@@ -41,15 +45,23 @@ const AutoComplete = <T extends OptionsType>({
         options={options}
         groupBy={groupBy}
         css={css`
-          > div > div {
+          > div {
             div {
-              z-index: ${theme.zIndex.appBar};
-            }
-            input {
-              z-index: ${theme.zIndex.appBar};
-            }
-            input::placeholder {
-              opacity: 1;
+              div {
+                z-index: ${theme.zIndex.appBar};
+                button {
+                  display: ${hideCursor ? 'none' : 'block'};
+                }
+              }
+              input {
+                z-index: ${theme.zIndex.appBar};
+                margin-left: ${variant === 'ghost' ? -12 : 0}px;
+                text-align: ${alignment};
+                margin-right: ${alignment === 'left' ? 0 : -40}px;
+              }
+              input::placeholder {
+                opacity: 1;
+              }
             }
           }
         `}
@@ -71,7 +83,7 @@ const AutoComplete = <T extends OptionsType>({
         getOptionLabel={labelKey ? (option) => option[labelKey] : undefined}
         renderOption={renderOption}
       />
-    </>
+    </Box>
   )
 }
 

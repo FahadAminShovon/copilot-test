@@ -32,8 +32,7 @@ const Header = () => {
       <Autocomplete
         options={countries}
         labelKey="name"
-        valueKey="code"
-        sx={{ width: 300 }}
+        sx={{ width: 300, marginLeft: 'auto' }}
         renderOption={(props, data) => (
           <Box
             sx={{

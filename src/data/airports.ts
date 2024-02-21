@@ -1782,3 +1782,5 @@ export const airports = [
     },
   },
 ]
+
+export type AirportTypes = typeof airports
