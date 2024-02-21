@@ -5,15 +5,16 @@ import { Box, Divider, Stack } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
 import { Button } from '../Button/Button'
 
+export type DatePickerProps = {
+  value: Dayjs | null
+  setValue: React.Dispatch<React.SetStateAction<dayjs.Dayjs | null>>
+  onCancel: () => void
+}
 const DatePicker = ({
   value = dayjs(Date.now()),
   setValue,
   onCancel,
-}: {
-  value: Dayjs | null
-  setValue: React.Dispatch<React.SetStateAction<dayjs.Dayjs | null>>
-  onCancel: () => void
-}) => {
+}: DatePickerProps) => {
   return (
     <Box sx={{ width: '100%', pb: 1 }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
