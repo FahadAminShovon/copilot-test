@@ -1,49 +1,11 @@
-import {
-  Stack,
-  ToggleButton,
-  ToggleButtonGroup,
-  Box,
-  Typography,
-  colors,
-  autocompleteClasses,
-} from '@mui/material'
-import React, { useState } from 'react'
+import { Stack, Box, Typography, autocompleteClasses } from '@mui/material'
+import { useState } from 'react'
 import { theme } from '../../../theme'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Autocomplete } from '@components'
+import { Autocomplete, ToggleButtonGroup } from '@components'
 import { airports } from '../../../data/airports'
 
-const Dot = ({ isActive }: { isActive: boolean }) => (
-  <Box
-    sx={{
-      height: 4,
-      width: 4,
-      borderRadius: '50%',
-      background: isActive ? colors.blue[400] : colors.grey[500],
-    }}
-  />
-)
-
 type ToggleType = 'round-trip' | 'one-way'
-
-const CustomToggleButton = ({
-  toggleType,
-  selectedValue,
-  children,
-}: {
-  toggleType: ToggleType
-  selectedValue: ToggleType
-  children: React.ReactNode
-}) => (
-  <ToggleButton value={toggleType}>
-    <Stack direction={'row'} gap={1} alignItems={'center'}>
-      <Dot isActive={selectedValue === toggleType} />
-      <Typography color="primary" sx={{ textTransform: 'none' }}>
-        {children}
-      </Typography>
-    </Stack>
-  </ToggleButton>
-)
 
 const TravelCard = () => {
   const [selectedValue, setSelectedValue] = useState<ToggleType>('round-trip')
@@ -51,25 +13,13 @@ const TravelCard = () => {
     <Stack gap={3}>
       <Stack alignItems={'center'} direction={'row'} gap={2}>
         <ToggleButtonGroup
-          value={selectedValue}
-          exclusive
-          onChange={(_, val) => {
-            setSelectedValue(val)
-          }}
-        >
-          <CustomToggleButton
-            toggleType="round-trip"
-            selectedValue={selectedValue}
-          >
-            Round Trip
-          </CustomToggleButton>
-          <CustomToggleButton
-            toggleType="one-way"
-            selectedValue={selectedValue}
-          >
-            One Way
-          </CustomToggleButton>
-        </ToggleButtonGroup>
+          selectedValue={selectedValue}
+          setSelectedValue={setSelectedValue}
+          buttons={[
+            { label: 'Round Trip', value: 'round-trip' },
+            { label: 'One Way', value: 'one-way' },
+          ]}
+        />
         <Box sx={{ ml: 'auto' }}>
           <Typography>1 Adult</Typography>
         </Box>
