@@ -31,6 +31,7 @@ import { AISearchBtn } from './AISearchBtn'
 import SelectedClass from './SelectedClass'
 import PassangerSelect from './PassangerSelect'
 import TravelDatePicker from './TravelDatePicker'
+import CookieAlert from '../../components/CookieAlert/CookieAlert'
 
 type ToggleType = 'round-trip' | 'one-way'
 
@@ -40,10 +41,34 @@ const CustomDivider = () => (
   </Grid>
 )
 
+const CookieContainer = ({
+  setAcceptCookie,
+}: {
+  setAcceptCookie: React.Dispatch<React.SetStateAction<boolean>>
+}) => (
+  <Box
+    sx={{
+      mx: -2.5,
+      mb: -2.5,
+      borderBottomLeftRadius: { md: 16 },
+      borderBottomRightRadius: { md: 16 },
+      overflow: 'hidden',
+    }}
+  >
+    <CookieAlert
+      onAcceptAllCookie={() => {
+        setAcceptCookie(true)
+      }}
+      onAcceptNecessaryCookie={() => setAcceptCookie(true)}
+    />
+  </Box>
+)
+
 const TravelCard = () => {
   const [selectedValue, setSelectedValue] = useState<ToggleType>('one-way')
   const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'))
   const [isAiSearchEnabled, setIsAiSearchEnabled] = useState(false)
+  const [isCookieAccepted, setIsCookieAccepted] = useState(false)
   const {
     anchorEl: anchorElRoundTrip,
     isPopupOpen: isDatePickerRoundTripOpen,
@@ -191,37 +216,42 @@ const TravelCard = () => {
               </Button>
             </Box>
           </Stack>
+          {!isCookieAccepted && (
+            <CookieContainer setAcceptCookie={setIsCookieAccepted} />
+          )}
         </Stack>
       )}
 
       {isAiSearchEnabled && (
         <Stack
-          my={{ md: 10 }}
-          alignItems={'center'}
-          sx={{
-            minHeight: { xs: '75vh', md: 'auto' },
-            justifyContent: 'center',
-          }}
+          sx={{ minHeight: { xs: '80vh', md: 300 } }}
+          justifyContent={'space-between'}
         >
-          <TextField
-            placeholder="Where would you like to go?"
-            InputProps={{
-              endAdornment: <SendOutlinedIcon color="primary" />,
-            }}
-            sx={{
-              minWidth: {
-                xs: '100%',
-                md: '75%',
-                background: colors.blueGrey['50'],
-              },
-            }}
-          />
-          <Box sx={{ mt: 3 }}>
-            <AISearchBtn
-              isAiSearchEnabled={isAiSearchEnabled}
-              setIsAiSearchEnabled={setIsAiSearchEnabled}
+          <Box />
+          <Stack alignItems={'center'}>
+            <TextField
+              placeholder="Where would you like to go?"
+              InputProps={{
+                endAdornment: <SendOutlinedIcon color="primary" />,
+              }}
+              sx={{
+                minWidth: {
+                  xs: '100%',
+                  md: '75%',
+                  background: colors.blueGrey['50'],
+                },
+              }}
             />
-          </Box>
+            <Box sx={{ mt: 3 }}>
+              <AISearchBtn
+                isAiSearchEnabled={isAiSearchEnabled}
+                setIsAiSearchEnabled={setIsAiSearchEnabled}
+              />
+            </Box>
+          </Stack>
+          {!isCookieAccepted && (
+            <CookieContainer setAcceptCookie={setIsCookieAccepted} />
+          )}
         </Stack>
       )}
       <Popover
