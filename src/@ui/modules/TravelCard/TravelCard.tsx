@@ -195,7 +195,14 @@ const TravelCard = () => {
       )}
 
       {isAiSearchEnabled && (
-        <Stack my={10} alignItems={'center'}>
+        <Stack
+          my={{ md: 10 }}
+          alignItems={'center'}
+          sx={{
+            minHeight: { xs: '75vh', md: 'auto' },
+            justifyContent: 'center',
+          }}
+        >
           <TextField
             placeholder="Where would you like to go?"
             InputProps={{
