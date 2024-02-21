@@ -12,37 +12,31 @@ import {
   Switch,
   FormControlLabel,
   colors,
-  Chip,
+  TextField,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { theme } from '../../../theme'
 import Grid from '@mui/material/Unstable_Grid2'
-import { Button, CheckboxToggle, ToggleButtonGroup } from '@components'
+import { Button, ToggleButtonGroup } from '@components'
 import { airports } from '../../../data/airports'
 import LocationSelect from './LocationSelect'
 import DatePicker from '../../components/DatePicker/DatePicker'
 import React from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { usePopover } from '../../../hooks/usePopover'
-import PassangerCounter from './PassangerCounter'
-import { formatPassengerCounts } from '../../../utils/helper'
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined'
-import { seatTypes } from '../../../data/seatType'
-import ChairAltOutlinedIcon from '@mui/icons-material/ChairAltOutlined'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined'
 
 import RepeatOutlinedIcon from '@mui/icons-material/RepeatOutlined'
+import { AISearchBtn } from './AISearchBtn'
+import SelectedClass from './SelectedClass'
+import PassangerSelect from './PassangerSelect'
 
 type ToggleType = 'round-trip' | 'one-way'
 
 const TravelCard = () => {
   const [selectedValue, setSelectedValue] = useState<ToggleType>('one-way')
   const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'))
-  const [passengersDescription, setPassengersDescription] = useState('1 adult')
-  const [seatType, setSeatType] =
-    useState<(typeof seatTypes)[number]['value']>('all classes')
-  const selectedClass = seatTypes.find(({ value }) => value === seatType)?.label
-
+  const [isAiSearchEnabled, setIsAiSearchEnabled] = useState(false)
   const {
     anchorEl: anchorElOneTrip,
     isPopupOpen: isDatePickerOneTripOpen,
@@ -55,20 +49,6 @@ const TravelCard = () => {
     isPopupOpen: isDatePickerRoundTripOpen,
     handleOpen: handleDatePickerRoundTripOpen,
     handleClose: handleDatePickerRoundTripClose,
-  } = usePopover()
-
-  const {
-    anchorEl: passengerAnchorEl,
-    isPopupOpen: isPassengerPopoverOpen,
-    handleOpen: openPassengerPopover,
-    handleClose: closePassengerPopover,
-  } = usePopover()
-
-  const {
-    anchorEl: classAnchorEl,
-    isPopupOpen: isClassPopoverOpen,
-    handleOpen: openClassPopover,
-    handleClose: closeClassPopover,
   } = usePopover()
 
   const handleOpen: typeof handleDatePickerOneTripOpen = (e) => {
@@ -90,122 +70,86 @@ const TravelCard = () => {
 
   return (
     <>
-      <Stack gap={5}>
-        <Stack alignItems={'center'} direction={'row'} gap={2}>
-          <ToggleButtonGroup
-            selectedValue={selectedValue}
-            setSelectedValue={setSelectedValue}
-            buttons={[
-              { label: 'Round Trip', value: 'round-trip' },
-              { label: 'One Way', value: 'one-way' },
-            ]}
-          />
-          <Box sx={{ ml: 'auto' }}>
-            <MuiButton
-              endIcon={<ExpandMoreOutlinedIcon color="primary" />}
-              startIcon={<AccountCircleOutlinedIcon />}
-              onClick={openPassengerPopover}
-              disableRipple
-              sx={{ color: 'black' }}
-            >
-              {passengersDescription}
-            </MuiButton>
-          </Box>
-          <MuiButton
-            endIcon={<ExpandMoreOutlinedIcon color="primary" />}
-            startIcon={<ChairAltOutlinedIcon />}
-            onClick={openClassPopover}
-            disableRipple
-            sx={{ color: 'black' }}
-          >
-            {selectedClass}
-          </MuiButton>
-        </Stack>
-        <Grid container spacing={2}>
-          <Grid xs={6}>
-            <Stack
-              direction={'row'}
-              justifyContent={'space-between'}
-              sx={{
-                flexGrow: 1,
-                borderRight: `1px solid ${theme.palette.divider}`,
-                paddingRight: 2.5,
-              }}
-              alignItems="center"
-            >
-              <LocationSelect
-                airports={airports}
-                placeholder={'Select City'}
-                label="From"
-              />
-              <RepeatOutlinedIcon />
-              <LocationSelect
-                airports={airports}
-                placeholder={'Select City'}
-                label="To"
-                alignment="right"
-              />
-            </Stack>
-          </Grid>
-          <Grid xs={6}>
-            <Stack
-              direction={'row'}
-              justifyContent={'space-between'}
-              sx={{ flexGrow: 1, paddingLeft: 2.5 }}
-            >
-              <Box>
-                <InputLabel>Depart</InputLabel>
-                <MuiButton
-                  sx={{ padding: 0, color: 'black', mt: 1 }}
-                  onClick={handleOpen}
-                  disableRipple
-                >
-                  {value ? dayjs(value).format('ddd MMMM D YYYY') : ''}
-                </MuiButton>
-              </Box>
-
-              {selectedValue === 'round-trip' && (
+      {!isAiSearchEnabled && (
+        <Stack gap={5}>
+          <Stack alignItems={'center'} direction={'row'} gap={2}>
+            <ToggleButtonGroup
+              selectedValue={selectedValue}
+              setSelectedValue={setSelectedValue}
+              buttons={[
+                { label: 'Round Trip', value: 'round-trip' },
+                { label: 'One Way', value: 'one-way' },
+              ]}
+            />
+            <Box sx={{ ml: 'auto' }}>
+              <PassangerSelect />
+            </Box>
+            <SelectedClass />
+          </Stack>
+          <Grid container spacing={2}>
+            <Grid xs={6}>
+              <Stack
+                direction={'row'}
+                justifyContent={'space-between'}
+                sx={{
+                  flexGrow: 1,
+                  borderRight: `1px solid ${theme.palette.divider}`,
+                  paddingRight: 2.5,
+                }}
+                alignItems="center"
+              >
+                <LocationSelect
+                  airports={airports}
+                  placeholder={'Select City'}
+                  label="From"
+                />
+                <RepeatOutlinedIcon />
+                <LocationSelect
+                  airports={airports}
+                  placeholder={'Select City'}
+                  label="To"
+                  alignment="right"
+                />
+              </Stack>
+            </Grid>
+            <Grid xs={6}>
+              <Stack
+                direction={'row'}
+                justifyContent={'space-between'}
+                sx={{ flexGrow: 1, paddingLeft: 2.5 }}
+              >
                 <Box>
-                  <Typography>Return</Typography>
+                  <InputLabel>Depart</InputLabel>
                   <MuiButton
-                    sx={{ padding: 0, color: 'black' }}
+                    sx={{ padding: 0, color: 'black', mt: 1 }}
                     onClick={handleOpen}
                     disableRipple
                   >
-                    {value
-                      ? dayjs(value).add(30, 'day').format('ddd MMMM D YYYY')
-                      : ''}
+                    {value ? dayjs(value).format('ddd MMMM D YYYY') : ''}
                   </MuiButton>
                 </Box>
-              )}
-              {selectedValue !== 'round-trip' && <Box />}
-            </Stack>
+
+                {selectedValue === 'round-trip' && (
+                  <Box>
+                    <Typography>Return</Typography>
+                    <MuiButton
+                      sx={{ padding: 0, color: 'black' }}
+                      onClick={handleOpen}
+                      disableRipple
+                    >
+                      {value
+                        ? dayjs(value).add(30, 'day').format('ddd MMMM D YYYY')
+                        : ''}
+                    </MuiButton>
+                  </Box>
+                )}
+                {selectedValue !== 'round-trip' && <Box />}
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
-        <Stack direction={'row'} gap={1} alignItems="center">
-          <FormControlLabel
-            label="Nonstop"
-            control={<Switch />}
-            css={css`
-              .MuiFormControlLabel-label {
-                color: ${colors.grey[600]};
-              }
-            `}
-          />
-          <Stack
-            direction="row"
-            gap={1}
-            alignItems="center"
-            sx={{ width: '100%' }}
-          >
-            <Chip
-              label="New"
-              variant="filled"
-              color="success"
-              sx={{ borderRadius: 1, opacity: 0.6, px: 1.5, py: 0.5 }}
-            />
+          <Stack direction={'row'} gap={1} alignItems="center">
             <FormControlLabel
-              label="AI Search"
+              label="Nonstop"
               control={<Switch />}
               css={css`
                 .MuiFormControlLabel-label {
@@ -213,19 +157,47 @@ const TravelCard = () => {
                 }
               `}
             />
+            <AISearchBtn
+              isAiSearchEnabled={isAiSearchEnabled}
+              setIsAiSearchEnabled={setIsAiSearchEnabled}
+            />
+            <Box sx={{ ml: 'auto' }}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ ml: 'auto', px: 2 }}
+                disabled={selectedValue === 'one-way'}
+              >
+                Search&nbsp;Flights
+              </Button>
+            </Box>
           </Stack>
-          <Box>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{ ml: 'auto', px: 2 }}
-              disabled={selectedValue === 'one-way'}
-            >
-              Search&nbsp;Flights
-            </Button>
+        </Stack>
+      )}
+
+      {isAiSearchEnabled && (
+        <Stack my={10} alignItems={'center'}>
+          <TextField
+            placeholder="Where would you like to go?"
+            InputProps={{
+              endAdornment: <SendOutlinedIcon color="primary" />,
+            }}
+            sx={{
+              minWidth: {
+                xs: '100%',
+                md: '75%',
+                background: colors.blueGrey['50'],
+              },
+            }}
+          />
+          <Box sx={{ mt: 3 }}>
+            <AISearchBtn
+              isAiSearchEnabled={isAiSearchEnabled}
+              setIsAiSearchEnabled={setIsAiSearchEnabled}
+            />
           </Box>
         </Stack>
-      </Stack>
+      )}
 
       <Popover
         open={isDatePickerOneTripOpen}
@@ -251,48 +223,6 @@ const TravelCard = () => {
           <Typography>
             DateRange is only available for Mui-x pro plan
           </Typography>
-        </Paper>
-      </Popover>
-      <Popover
-        open={isPassengerPopoverOpen}
-        anchorEl={passengerAnchorEl}
-        onClose={closePassengerPopover}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Paper sx={{ p: 2 }}>
-          <PassangerCounter
-            onChange={({ adult, child, infantLap, infantSeat }) => {
-              const desc = formatPassengerCounts({
-                adult,
-                infantLap,
-                infantSeat,
-                child,
-              })
-              setPassengersDescription(desc)
-            }}
-          />
-        </Paper>
-      </Popover>
-
-      <Popover
-        open={isClassPopoverOpen}
-        anchorEl={classAnchorEl}
-        onClose={closeClassPopover}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Paper sx={{ p: 2, minWidth: 260 }}>
-          <Stack gap={2}>
-            <CheckboxToggle
-              selectedValue={seatType}
-              options={seatTypes}
-              setSelectedValue={setSeatType}
-              row={false}
-              labelPlacement="start"
-            />
-            <Button variant="outlined" onClick={closeClassPopover}>
-              Confirm
-            </Button>
-          </Stack>
         </Paper>
       </Popover>
     </>
