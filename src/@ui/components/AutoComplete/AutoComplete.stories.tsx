@@ -57,7 +57,7 @@ export const WithCustomRenderOptions: Story = {
       placeholder="Select an option"
       variant="outlined"
       alignment="left"
-      renderOption={(props, data) => <div>{data.label}</div>}
+      renderOption={(_props, data) => <div>{data.label}</div>}
     />
   ),
 }

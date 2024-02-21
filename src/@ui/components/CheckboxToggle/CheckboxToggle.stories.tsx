@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import CheckboxToggle, { CheckboxOptionType } from './CheckboxToggle'
 

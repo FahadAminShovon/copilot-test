@@ -1,6 +1,5 @@
 import { Button } from '@components'
 import { Box, Stack, Typography, colors } from '@mui/material'
-import { useState } from 'react'
 
 export type CookiePropType = {
   onAcceptAllCookie: () => void
