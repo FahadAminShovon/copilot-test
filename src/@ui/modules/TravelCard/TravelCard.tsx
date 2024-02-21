@@ -1,8 +1,15 @@
-import { Stack, Box, Typography, Paper, Button, Popover } from '@mui/material'
+import {
+  Stack,
+  Box,
+  Typography,
+  Paper,
+  Popover,
+  Button as MuiButton,
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 import { theme } from '../../../theme'
 import Grid from '@mui/material/Unstable_Grid2'
-import { ToggleButtonGroup } from '@components'
+import { Button, CheckboxToggle, ToggleButtonGroup } from '@components'
 import { airports } from '../../../data/airports'
 import LocationSelect from './LocationSelect'
 import DatePicker from '../../components/DatePicker/DatePicker'
@@ -12,6 +19,9 @@ import { usePopover } from '../../../hooks/usePopover'
 import PassangerCounter from './PassangerCounter'
 import { formatPassengerCounts } from '../../../utils/helper'
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined'
+import { seatTypes } from '../../../data/seatType'
+import ChairAltOutlinedIcon from '@mui/icons-material/ChairAltOutlined'
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
 type ToggleType = 'round-trip' | 'one-way'
 
@@ -19,6 +29,9 @@ const TravelCard = () => {
   const [selectedValue, setSelectedValue] = useState<ToggleType>('one-way')
   const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-17'))
   const [passengersDescription, setPassengersDescription] = useState('1 adult')
+  const [seatType, setSeatType] =
+    useState<(typeof seatTypes)[number]['value']>('all classes')
+  const selectedClass = seatTypes.find(({ value }) => value === seatType)?.label
 
   const {
     anchorEl: anchorElOneTrip,
@@ -39,6 +52,13 @@ const TravelCard = () => {
     isPopupOpen: isPassengerPopoverOpen,
     handleOpen: openPassengerPopover,
     handleClose: closePassengerPopover,
+  } = usePopover()
+
+  const {
+    anchorEl: classAnchorEl,
+    isPopupOpen: isClassPopoverOpen,
+    handleOpen: openClassPopover,
+    handleClose: closeClassPopover,
   } = usePopover()
 
   const handleOpen: typeof handleDatePickerOneTripOpen = (e) => {
@@ -71,18 +91,25 @@ const TravelCard = () => {
             ]}
           />
           <Box sx={{ ml: 'auto' }}>
-            <Button
+            <MuiButton
               endIcon={<ExpandMoreOutlinedIcon color="primary" />}
+              startIcon={<AccountCircleOutlinedIcon />}
               onClick={openPassengerPopover}
               disableRipple
               sx={{ color: 'black' }}
             >
               {passengersDescription}
-            </Button>
+            </MuiButton>
           </Box>
-          <Box>
-            <Typography>All Classes</Typography>
-          </Box>
+          <MuiButton
+            endIcon={<ExpandMoreOutlinedIcon color="primary" />}
+            startIcon={<ChairAltOutlinedIcon />}
+            onClick={openClassPopover}
+            disableRipple
+            sx={{ color: 'black' }}
+          >
+            {selectedClass}
+          </MuiButton>
         </Stack>
         <Grid container spacing={2}>
           <Grid xs={6}>
@@ -118,19 +145,19 @@ const TravelCard = () => {
             >
               <Box>
                 <Typography>Depart</Typography>
-                <Button
+                <MuiButton
                   sx={{ padding: 0, color: 'black', mt: 1 }}
                   onClick={handleOpen}
                   disableRipple
                 >
                   {value ? dayjs(value).format('ddd MMMM D YYYY') : ''}
-                </Button>
+                </MuiButton>
               </Box>
 
               {selectedValue === 'round-trip' && (
                 <Box>
                   <Typography>Return</Typography>
-                  <Button
+                  <MuiButton
                     sx={{ padding: 0, color: 'black' }}
                     onClick={handleOpen}
                     disableRipple
@@ -138,7 +165,7 @@ const TravelCard = () => {
                     {value
                       ? dayjs(value).add(30, 'day').format('ddd MMMM D YYYY')
                       : ''}
-                  </Button>
+                  </MuiButton>
                 </Box>
               )}
               {selectedValue !== 'round-trip' && <Box />}
@@ -191,6 +218,28 @@ const TravelCard = () => {
               setPassengersDescription(desc)
             }}
           />
+        </Paper>
+      </Popover>
+
+      <Popover
+        open={isClassPopoverOpen}
+        anchorEl={classAnchorEl}
+        onClose={closeClassPopover}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Paper sx={{ p: 2, minWidth: 260 }}>
+          <Stack gap={2}>
+            <CheckboxToggle
+              selectedValue={seatType}
+              options={seatTypes}
+              setSelectedValue={setSeatType}
+              row={false}
+              labelPlacement="start"
+            />
+            <Button variant="outlined" onClick={closeClassPopover}>
+              Confirm
+            </Button>
+          </Stack>
         </Paper>
       </Popover>
     </>
